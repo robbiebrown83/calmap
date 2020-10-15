@@ -148,7 +148,7 @@ def yearplot(data, year=None, how='sum', vmin=None, vmax=None, cmap='Reds',
         # of course won't work when the axes itself has a transparent
         # background so in that case we default to white which will usually be
         # the figure or canvas background color.
-        linecolor = ax.get_axis_bgcolor()
+        linecolor = ax.get_fc() #previous cmd deprecated: https://stackoverflow.com/questions/50691151/axessubplot-object-has-no-attribute-get-axis-bgcolor
         if ColorConverter().to_rgba(linecolor)[-1] == 0:
             linecolor = 'white'
 
@@ -217,8 +217,8 @@ def yearplot(data, year=None, how='sum', vmin=None, vmax=None, cmap='Reds',
         dayticks = range(len(daylabels))[dayticks // 2::dayticks]
 
     ax.set_xlabel('')
-    ax.set_xticks([by_day.ix[datetime.date(year, i + 1, 15)].week
-                   for i in monthticks])
+    ax.set_xticks([by_day.loc[datetime.date(year, i + 1, 15)].week
+                   for i in monthticks]) #ix deprecated see: https://stackoverflow.com/questions/59991397/attributeerror-dataframe-object-has-no-attribute-ix
     ax.set_xticklabels([monthlabels[i] for i in monthticks], ha='center')
 
     ax.set_ylabel('')
